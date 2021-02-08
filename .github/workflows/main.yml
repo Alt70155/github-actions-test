@@ -11,12 +11,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    environment: stg
 
     steps:
     - uses: actions/checkout@v1
 
     - name: test
       env:
-        TEST: ${{ secrets.TEST }}
+        STG_TEST: ${{ secrets.STG_TEST }}
       run: |
-        echo $TEST
+        echo $STG_TEST
