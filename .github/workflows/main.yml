@@ -15,7 +15,7 @@ jobs:
     environment: staging
 
     # PRの時に実行される
-    # if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request'
     steps:
     - uses: actions/checkout@v1
 
