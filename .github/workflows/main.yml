@@ -1,0 +1,22 @@
+name: Build and Push
+# jobを実行するトリガー
+# 以下、create-dockerfileブランチからpushされたら
+on:
+  push:
+    branches:
+      - main
+
+# トリガーで実行されるjob
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: test
+      env:
+        TEST: ${{ secrets.TEST }}
+      run: |
+        echo $TEST
