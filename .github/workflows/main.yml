@@ -41,3 +41,4 @@ jobs:
         SECRET: ${{ secrets.SECRET }}
       run: |
         echo $SECRET
+
