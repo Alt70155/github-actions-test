@@ -19,11 +19,16 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: build
+    - name: Setup tmate session
       env:
-        SECRET: ${{ secrets.SECRET }}
-      run: |
-        echo $SECRET
+          SECRET: ${{ secrets.SECRET }}
+      uses: mxschmitt/action-tmate@v3
+
+    # - name: build
+    #   env:
+    #     SECRET: ${{ secrets.SECRET }}
+    #   run: |
+    #     echo $SECRET
 
   BuildProduction:
     runs-on: ubuntu-latest
