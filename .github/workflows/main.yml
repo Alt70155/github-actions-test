@@ -12,7 +12,7 @@ jobs:
   BuildStaging:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    environment: staging
+    environment: production
 
     # トリガーが実行されたら必ず実行される
     if: github.event.pull_request.draft == false
