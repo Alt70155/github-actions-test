@@ -14,8 +14,8 @@ jobs:
     timeout-minutes: 30
     environment: staging
 
-    # PRの時に実行される
-    # if: github.event_name == 'pull_request'
+    # PRを作成したときに実行される
+    if: github.event_name == 'pull_request'
     steps:
     - uses: actions/checkout@v1
 
