@@ -22,6 +22,7 @@ jobs:
     - name: Setup tmate session
       env:
           SECRET: ${{ secrets.SECRET }}
+          AWS_ECR_REPO_NAME: ${{ secrets.AWS_ECR_REPO_NAME }}
       uses: mxschmitt/action-tmate@v3
 
     # - name: build
@@ -29,7 +30,6 @@ jobs:
     #     SECRET: ${{ secrets.SECRET }}
     #   run: |
     #     echo $SECRET
-
 
   BuildProduction:
     runs-on: ubuntu-latest
