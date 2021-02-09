@@ -14,8 +14,8 @@ jobs:
     timeout-minutes: 30
     environment: staging
 
-    # PRを作成したときに実行される
-    # if: github.event_name == 'pull_request' ||  github.event.ref == 'refs/heads/main'
+    # トリガーが実行されたら必ず実行される
+    if: github.event.pull_request.draft == false
     steps:
     - uses: actions/checkout@v1
 
@@ -30,7 +30,7 @@ jobs:
     timeout-minutes: 30
     environment: production
 
-    # mainにpushされた時に実行
+    # mainにpushされた時に実行(PRがmergeされても実行される)
     if: github.event.ref == 'refs/heads/main'
     needs: [BuildStaging]
     steps:
@@ -41,3 +41,4 @@ jobs:
         SECRET: ${{ secrets.SECRET }}
       run: |
         echo $SECRET
+
