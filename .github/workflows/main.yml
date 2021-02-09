@@ -25,6 +25,7 @@ jobs:
           AWS_ECR_REPO_NAME: ${{ secrets.AWS_ECR_REPO_NAME }}
       uses: mxschmitt/action-tmate@v3
 
+
     # - name: build
     #   env:
     #     SECRET: ${{ secrets.SECRET }}
