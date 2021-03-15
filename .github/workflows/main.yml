@@ -9,29 +9,29 @@ on:
 
 # トリガーで実行されるjob
 jobs:
+  # mainブランチにmergeされたら実行したい
   BuildStaging:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment: staging
 
-    # トリガーが実行されたら必ず実行される
+    # mainにmergeされたら実行したい
     if: github.event.pull_request.draft == false
-    steps:
-    - uses: actions/checkout@v1
-
+    if: github.event.pull_request.merged == true
     - name: build
       env:
         SECRET: ${{ secrets.SECRET }}
       run: |
         echo $SECRET
 
+  # releaseブランチにmergeされたら実行したい
   BuildProduction:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment: production
 
-    # mainにpushされた時に実行(PRがmergeされても実行される)
-    if: github.event.ref == 'refs/heads/main'
+    # releaseにpushされた時に実行(PRがmergeされても実行される)
+    if: github.event.ref == 'refs/heads/release'
     needs: [BuildStaging]
     steps:
     - uses: actions/checkout@v1
