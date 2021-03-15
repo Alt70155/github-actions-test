@@ -23,13 +23,13 @@ jobs:
           # fetch all history to find all related pull requests.
           fetch-depth: 0
 
-      - name: Configure AWS Credentials
+      # - name: Configure AWS Credentials
         # set login config...
       
-      - name: Login to Amazon ECR
+      # - name: Login to Amazon ECR
         # run login...
 
-      - name: Build and push image to Amazon ECR
+      # - name: Build and push image to Amazon ECR
         # set env...
         # run build...
         env:
