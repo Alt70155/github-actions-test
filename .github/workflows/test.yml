@@ -46,7 +46,7 @@ jobs:
         env:
           GIT_PR_RELEASE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_PR_RELEASE_BRANCH_PRODUCTION: release
-          GIT_PR_RELEASE_BRANCH_STAGING: master
+          GIT_PR_RELEASE_BRANCH_STAGING: main
           GIT_PR_RELEASE_LABELS: release
           # git-pr-release write Time.now in the title.
           TZ: Asia/Tokyo
