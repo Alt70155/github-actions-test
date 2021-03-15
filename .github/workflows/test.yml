@@ -1,0 +1,75 @@
+name: CI/CD for main
+
+# 予想：mainへのPR/Push、releaseへのPR/Push全てのアクションでトリガーを起動する必要があり、トリガーの中のifで、実行するジョブを分岐させる
+on:
+  pull_request:
+    branches:
+      - 'main'
+    types: [opened, synchronize, closed]
+
+# トリガーで実行されるjob
+jobs:
+  # mainブランチにmergeされたら実行し、releaseへのPRを作成する
+  BuildStg:
+    name: Build image as staging
+
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # fetch all history to find all related pull requests.
+          fetch-depth: 0
+
+      - name: Configure AWS Credentials
+        # set login config...
+      
+      - name: Login to Amazon ECR
+        # run login...
+
+      - name: Build and push image to Amazon ECR
+        # set env...
+        # run build...
+        env:
+          SECRET: ${{ secrets.SECRET }}
+        run: |
+          echo $SECRET
+
+      - name: Set up Ruby 2.6
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.6.x
+
+      - name: Create a release pull request
+        env:
+          GIT_PR_RELEASE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_PR_RELEASE_BRANCH_PRODUCTION: release
+          GIT_PR_RELEASE_BRANCH_STAGING: master
+          GIT_PR_RELEASE_LABELS: release
+          # git-pr-release write Time.now in the title.
+          TZ: Asia/Tokyo
+        run: |
+          gem install -N git-pr-release -v "1.4.0"
+          git-pr-release --no-fetch
+
+
+  # releaseブランチにmergeされたら実行したい
+  BuildProduction:
+    name: Build image as production
+
+    # releaseにpushされた時に実行する(PRがmergeされても実行される)
+    if: github.event.ref == 'refs/heads/release'
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: build
+      env:
+        SECRET: ${{ secrets.SECRET }}
+      run: |
+        echo $SECRET
+
