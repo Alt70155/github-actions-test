@@ -2,12 +2,6 @@ name: CI/CD for main
 
 # 予想：mainへのPR/Push、releaseへのPR/Push全てのアクションでトリガーを起動する必要があり、トリガーの中のifで、実行するジョブを分岐させる
 on:
-  pull_request:
-    branches:
-      - 'main'
-    types: [opened, synchronize, closed]
-
-on:
   push:
     branches: [ main, release ]
     types: [opened, synchronize, closed]
