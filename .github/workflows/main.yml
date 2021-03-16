@@ -1,6 +1,9 @@
 name: Build for main
 
 on:
+  push:
+    branches:
+      - 'test'
   pull_request:
     branches:
       - 'main'
@@ -8,28 +11,13 @@ on:
 
 jobs:
 
-  create-release-pr:
+  BuildProduction:
+    name: Build image as production
+
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    environment: staging
+
     steps:
       - uses: actions/checkout@v2
-        with:
-          # fetch all history to find all related pull requests.
-          fetch-depth: 0
-
-      - name: Set up Ruby 2.6
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: 2.6.x
-
-      - name: Create a release pull request
-        env:
-          GIT_PR_RELEASE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GIT_PR_RELEASE_BRANCH_PRODUCTION: release
-          GIT_PR_RELEASE_BRANCH_STAGING: main
-          GIT_PR_RELEASE_LABELS: release
-          # git-pr-release write Time.now in the title.
-          TZ: Asia/Tokyo
-        run: |
-          gem install -N git-pr-release -v "1.4.0"
-          git-pr-release --no-fetch
+      - uses: github-actions-test/build@v1
