@@ -1,0 +1,11 @@
+inputs:
+  name:
+    description: 'Build and push image to Amazon ECR'
+runs:
+  using: "composite"
+  steps:
+    - name: Test
+      env:
+          HELLO: ${{ secrets.SECRET }}
+      run: |
+        echo HELLO
