@@ -1,4 +1,4 @@
-name: CI/CD for main
+name: Build for main
 
 # 予想：mainへのPR/Push、releaseへのPR/Push全てのアクションでトリガーを起動する必要があり、トリガーの中のifで、実行するジョブを分岐させる
 on:
@@ -7,16 +7,14 @@ on:
       - 'main'
     types: [opened, synchronize, closed]
 
-# トリガーで実行されるjob
 jobs:
-  # mainブランチにmergeされたら実行し、releaseへのPRを作成する
+  # PRがmainブランチにmergeされたら実行し、releaseへのPRを作成する
   BuildStg:
     name: Build image as staging
 
-    # TODO:これだとreleaseへのPRがmergeされた時も動いてしまう
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    environment: staging
+    environment: stg
 
     steps:
       - uses: actions/checkout@v2
@@ -24,19 +22,24 @@ jobs:
           # fetch all history to find all related pull requests.
           fetch-depth: 0
 
-      # - name: Configure AWS Credentials
-        # set login config...
-      
-      # - name: Login to Amazon ECR
-        # run login...
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+    
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build and push image to Amazon ECR
-        # set env...
-        # run build...
         env:
-          SECRET: ${{ secrets.SECRET }}
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPO_NAME }}
         run: |
-          echo $SECRET
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest --build-arg TARGET_ENV='stg'  .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
   create-release-pr:
     if: github.event.pull_request.merged == true
