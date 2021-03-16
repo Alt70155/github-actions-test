@@ -3,6 +3,7 @@ inputs:
     description: 'Build and push image to Amazon ECR'
 runs:
   using: "composite"
+  environment: staging
   steps:
     - env:
           HELLO: ${{ secrets.SECRET }}
