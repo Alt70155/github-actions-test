@@ -19,4 +19,4 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: github-actions-test/build@v1
+      - uses: Alt70155/github-actions-test@v1
