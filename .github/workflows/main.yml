@@ -8,6 +8,7 @@ on:
   pull_request:
     branches: [ main ]
 
+
 # トリガーで実行されるjob
 jobs:
   # mainブランチにmergeされたら実行し、releaseへのPRを作成する
