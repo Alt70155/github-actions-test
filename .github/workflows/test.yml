@@ -14,8 +14,8 @@ jobs:
   BuildStg:
     name: Build image as staging
 
-    # TODO:これだとreleaseへのPRがmergeされた時も動いちゃう？
-    if: github.event.pull_request.merged == true
+    # TODO:これだとreleaseへのPRがmergeされた時も動いてしまう
+    if: github.event.pull_request.merged == true && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     environment: staging
 
