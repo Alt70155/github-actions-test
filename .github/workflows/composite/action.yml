@@ -4,8 +4,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Test
-      env:
+    - env:
           HELLO: ${{ secrets.SECRET }}
       run: |
         echo HELLO
+      shell: bash
