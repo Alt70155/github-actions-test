@@ -3,21 +3,42 @@ name: Build and Push
 # 以下、create-dockerfileブランチからpushされたら
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 # トリガーで実行されるjob
 jobs:
-  build:
+  # mainブランチにmergeされたら実行したい
+  BuildStaging:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    environment: stg
+    environment: staging
 
+    # mainにmergeされたら実行したい
+    if: github.event.pull_request.draft == false
+    if: github.event.pull_request.merged == true
+    - name: build
+      env:
+        SECRET: ${{ secrets.SECRET }}
+      run: |
+        echo $SECRET
+
+  # releaseブランチにmergeされたら実行したい
+  BuildProduction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+
+    # releaseにpushされた時に実行(PRがmergeされても実行される)
+    if: github.event.ref == 'refs/heads/release'
+    needs: [BuildStaging]
     steps:
     - uses: actions/checkout@v1
 
-    - name: test
+    - name: build
       env:
-        STG_TEST: ${{ secrets.STG_TEST }}
+        SECRET: ${{ secrets.SECRET }}
       run: |
-        echo $STG_TEST
+        echo $SECRET
+
