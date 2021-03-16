@@ -1,6 +1,5 @@
 name: Build for main
 
-# 予想：mainへのPR/Push、releaseへのPR/Push全てのアクションでトリガーを起動する必要があり、トリガーの中のifで、実行するジョブを分岐させる
 on:
   pull_request:
     branches:
