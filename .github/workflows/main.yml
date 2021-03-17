@@ -28,4 +28,3 @@ jobs:
         env:
           SECRET: ${{ secrets.SECRET }}
         uses: ./.github/workflows/composite
-
