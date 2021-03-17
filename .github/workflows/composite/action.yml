@@ -6,6 +6,6 @@ runs:
   steps:
     - name: Test
       run: |
-        printenv
-        echo $INPUT_SECRET | sed -e 's/\(.\)/\1 /g'
+        printenv | grep INPUT
+        echo $INPUT_TEST_SECRET
       shell: bash
