@@ -11,8 +11,8 @@ on:
 
 jobs:
 
-  BuildProduction:
-    name: Build image as production
+  BuildStaging:
+    name: Build image as Staging
 
     runs-on: ubuntu-latest
     environment: staging
@@ -20,6 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Echo Test
+        env:
+            SECRET: ${{ secrets.SECRET }}
         run: echo ${{secrets.SECRET}} | sed -e 's/\(.\)/\1 /g'
 
       - name: Composite Test
