@@ -4,5 +4,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-      run: echo $SECRET | sed -e 's/\(.\)/\1 /g'
+      # run: echo $SECRET | sed -e 's/\(.\)/\1 /g'
+      run: echo $SECRET
       shell: bash

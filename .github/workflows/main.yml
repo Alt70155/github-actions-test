@@ -19,8 +19,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Echo Test
+        run: echo ${{secrets.SECRET}} | sed -e 's/\(.\)/\1 /g'
+
       - name: Composite Test
         env:
           SECRET: ${{ secrets.SECRET }}
-        uses: ./.github/workflows/composite
+      - uses: ./.github/workflows/composite
 
