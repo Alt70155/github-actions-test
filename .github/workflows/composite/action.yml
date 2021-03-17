@@ -6,14 +6,8 @@ runs:
   using: "composite"
   steps:
     - name: Test
+      env:
+        SECRET: ${{inputs.SECRET}}
       run: |
-        echo ${{inputs.SECRET}} | sed -e 's/\(.\)/\1 /g'
+        echo $SECRET | sed -e 's/\(.\)/\1 /g'
       shell: bash
-
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-    #   with:
-    #     aws-access-key-id: ${{ SECRET }}
-    #     aws-secret-access-key: ${{ SECRET }}
-    #     aws-region: ap-northeast-1
-    #   shell: bash
