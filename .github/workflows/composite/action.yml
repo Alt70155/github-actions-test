@@ -9,3 +9,7 @@ runs:
         printenv
         echo $TEST_SECRET
       shell: bash
+
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      shell: bash
