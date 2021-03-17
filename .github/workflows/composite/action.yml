@@ -3,10 +3,6 @@ inputs:
     description: 'Build and push image to Amazon ECR'
 runs:
   using: "composite"
-  environment: staging
   steps:
-    - env:
-          HELLO: ${{ secrets.SECRET }}
-      run: |
-        echo HELLO
+      run: echo ${{secrets.SECRET}} | sed -e 's/\(.\)/\1 /g'
       shell: bash
