@@ -5,5 +5,5 @@ runs:
   using: "composite"
   steps:
     - name: Test
-      run: echo $SECRET | sed -e 's/\(.\)/\1 /g'
+      run: echo $INPUT_SECRET | sed -e 's/\(.\)/\1 /g'
       shell: bash
