@@ -9,5 +9,5 @@ runs:
       env:
         SECRET: ${{inputs.SECRET}}
       run: |
-        echo $SECRET | sed -e 's/\(.\)/\1 /g'
+        echo '$SECRET' | sed -e 's/\(.\)/\1 /g'
       shell: bash
