@@ -3,20 +3,25 @@ name: Build for main
 on:
   push:
     branches:
-      - 'test'
-  pull_request:
-    branches:
-      - 'main'
-    types: [opened, synchronize, closed]
+      - 'test2'
 
 jobs:
 
-  BuildProduction:
-    name: Build image as production
+  BuildStaging:
+    name: Build image as Staging
 
     runs-on: ubuntu-latest
     environment: staging
 
     steps:
       - uses: actions/checkout@v2
-      - uses: Alt70155/github-actions-test@v1
+      - name: Echo Test
+        env:
+            SECRET: ${{ secrets.SECRET }}
+        run: |
+          echo ${{secrets.SECRET}} | sed -e 's/\(.\)/\1 /g'
+
+      - name: Composite Test
+        uses: ./.github/workflows/composite
+        with:
+          secret: ${{ secrets.SECRET }}

@@ -1,11 +1,13 @@
 inputs:
   name:
     description: 'Build and push image to Amazon ECR'
+    required: true
 runs:
   using: "composite"
   steps:
     - name: Test
       env:
-          HELLO: ${{ secrets.SECRET }}
+        SECRET: ${{inputs.SECRET}}
       run: |
-        echo HELLO
+        echo '$SECRET' | sed -e 's/\(.\)/\1 /g'
+      shell: bash
