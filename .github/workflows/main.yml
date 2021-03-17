@@ -24,4 +24,4 @@ jobs:
       - name: Composite Test
         uses: ./.github/workflows/composite
         with:
-          secret: ${{ environment }}
+          secret: ${{ secrets.SECRET }}
