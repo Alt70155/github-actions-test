@@ -21,8 +21,6 @@ jobs:
       #   run: echo ${{secrets.SECRET}} | sed -e 's/\(.\)/\1 /g'
 
       - name: Composite Test
-        # env:
-        #   SECRET: ${{ secrets.SECRET }}
+        env:
+          SECRET: ${{ secrets.SECRET }}
         uses: ./.github/workflows/composite
-        with:
-          test_secret: ${{ secrets.SECRET }}

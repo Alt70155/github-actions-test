@@ -11,3 +11,11 @@ runs:
         echo TEST_SECRET
         echo $INPUT_TEST_SECRET
       shell: bash
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ SECRET }}
+        aws-secret-access-key: ${{ SECRET }}
+        aws-region: ap-northeast-1
+      shell: bash
