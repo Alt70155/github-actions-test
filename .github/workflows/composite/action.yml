@@ -6,5 +6,6 @@ runs:
   steps:
     - name: Test
       run: |
+        printenv
         echo $TEST_SECRET
       shell: bash
