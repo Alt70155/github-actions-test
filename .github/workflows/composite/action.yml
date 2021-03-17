@@ -8,4 +8,6 @@ runs:
       run: |
         printenv
         echo $TEST_SECRET
+        echo TEST_SECRET
+        echo INPUT_TEST_SECRET
       shell: bash
