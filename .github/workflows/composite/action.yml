@@ -6,6 +6,5 @@ runs:
   steps:
     - name: Test
       run: |
-        printenv | grep INPUT
         echo $INPUT_TEST_SECRET
       shell: bash
